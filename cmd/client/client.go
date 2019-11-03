@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	pb "github.com/e-conomic/hiring-assigments/machinelearningteam/image-scaling-service/proto"
+	pb "github.com/Cytram/grpc-test/proto/api"
 	"google.golang.org/grpc"
 )
 
@@ -32,7 +32,7 @@ func main() {
 		},
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error")
 	}
 	ioutil.WriteFile("out.jpg", resp.GetContent(), 0644)
 }
