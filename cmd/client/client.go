@@ -4,6 +4,7 @@ import (
 	"context"
 	"io/ioutil"
 	"log"
+    "flag"
 
 	pb "github.com/Cytram/grpc-test/proto/api"
 	"google.golang.org/grpc"
@@ -21,6 +22,9 @@ func main() {
 	defer conn.Close()
 	client := pb.NewImageScalerClient(conn)
 
+    imageURL := flag.String("url", "", "URL for where to download image")
+    flag.Parse()
+
 	image, err := ioutil.ReadFile("test.jpg")
 	if err != nil {
 		log.Fatal("Couldn't read input image")
@@ -29,6 +33,9 @@ func main() {
 	resp, err := client.ScaleImage(ctx, &pb.ScaleImageRequest{
 		Image: &pb.Image{
 			Content: image,
+            Source: &pb.ImageSource{
+                HttpUri: *imageURL,
+            },
 		},
 	})
 	if err != nil {

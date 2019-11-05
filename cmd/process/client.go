@@ -11,6 +11,9 @@ import (
 
 const (
 	host = "localhost:50051"
+    scale = "1024x768"
+	grayscale = "0"
+
 )
 
 func main() {
@@ -25,11 +28,14 @@ func main() {
 	if err != nil {
 		log.Fatal("Couldn't read input image")
 	}
-	ctx := context.Background()
+
+    ctx := context.Background()
 	resp, err := client.ProcessImage(ctx, &pb.ProcessImageRequest{
 		Image: &pb.Image{
 			Content: image,
 		},
+        Scale: scale,
+        Grayscale: grayscale,
 	})
 	if err != nil {
 		log.Fatal(err)

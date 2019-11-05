@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='processor',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x1dproto/process/processor.proto\x12\tprocessor\"6\n\x13ProcessImageRequest\x12\x1f\n\x05image\x18\x01 \x01(\x0b\x32\x10.processor.Image\"$\n\x11ProcessImageReply\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"@\n\x05Image\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.processor.ImageSource\"\x1f\n\x0bImageSource\x12\x10\n\x08http_uri\x18\x01 \x01(\t2[\n\tProcessor\x12N\n\x0cProcessImage\x12\x1e.processor.ProcessImageRequest\x1a\x1c.processor.ProcessImageReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x1dproto/process/processor.proto\x12\tprocessor\"X\n\x13ProcessImageRequest\x12\x1f\n\x05image\x18\x01 \x01(\x0b\x32\x10.processor.Image\x12\r\n\x05scale\x18\x02 \x01(\t\x12\x11\n\tgrayscale\x18\x03 \x01(\t\"$\n\x11ProcessImageReply\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\"@\n\x05Image\x12\x0f\n\x07\x63ontent\x18\x01 \x01(\x0c\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.processor.ImageSource\"\x1f\n\x0bImageSource\x12\x10\n\x08http_uri\x18\x01 \x01(\t2[\n\tProcessor\x12N\n\x0cProcessImage\x12\x1e.processor.ProcessImageRequest\x1a\x1c.processor.ProcessImageReply\"\x00\x62\x06proto3')
 )
 
 
@@ -40,6 +40,20 @@ _PROCESSIMAGEREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='scale', full_name='processor.ProcessImageRequest.scale', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='grayscale', full_name='processor.ProcessImageRequest.grayscale', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -53,7 +67,7 @@ _PROCESSIMAGEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=98,
+  serialized_end=132,
 )
 
 
@@ -83,8 +97,8 @@ _PROCESSIMAGEREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=100,
-  serialized_end=136,
+  serialized_start=134,
+  serialized_end=170,
 )
 
 
@@ -121,8 +135,8 @@ _IMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=138,
-  serialized_end=202,
+  serialized_start=172,
+  serialized_end=236,
 )
 
 
@@ -152,8 +166,8 @@ _IMAGESOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=204,
-  serialized_end=235,
+  serialized_start=238,
+  serialized_end=269,
 )
 
 _PROCESSIMAGEREQUEST.fields_by_name['image'].message_type = _IMAGE
@@ -200,8 +214,8 @@ _PROCESSOR = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=237,
-  serialized_end=328,
+  serialized_start=271,
+  serialized_end=362,
   methods=[
   _descriptor.MethodDescriptor(
     name='ProcessImage',
