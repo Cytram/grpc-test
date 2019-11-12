@@ -46,6 +46,14 @@ spec:
             limits:
               memory: 512Mi
               cpu: 1000m
+          readinessProbe:
+            exec:
+              command:
+                ["/app/grpc-health-probe", "-addr=:50051"]
+          livenessProbe:
+            exec:
+              command:
+                ["/app/grpc-health-probe", "-addr=:50051"]
         - name: envoy
           imagePullPolicy: Always
           image: envoyproxy/envoy:v1.12.1

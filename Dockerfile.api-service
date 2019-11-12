@@ -17,6 +17,7 @@ FROM debian:stretch-slim AS runner
 WORKDIR /app
 
 COPY --from=builder ["/app/server", "/app/"]
+COPY --from=builder ["/app/grpc-health-probe", "/app/"]
 
 EXPOSE 5001 50051
 ENTRYPOINT ["/app/server"]

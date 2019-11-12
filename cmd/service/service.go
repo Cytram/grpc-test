@@ -10,6 +10,9 @@ import (
 	pb "github.com/Cytram/grpc-test/proto/api"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
+
+    health "github.com/e-conomic/hiring-assigments/machinelearningteam/image-scaling-service/pkg/health/v1"
+	api_health "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 var (
@@ -47,7 +50,12 @@ func main() {
 
     flag.Parse()
 
-	s := grpc.NewServer()
+    s := grpc.NewServer()
+
+	// Register: Health
+	healthServ := health.NewHealthCheckService()
+	api_health.RegisterHealthServer(s, healthServ)
+
     pb.RegisterImageScalerServer(s, &api.Server{Grayscale: *Grayscale, Scale: *Scale})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
