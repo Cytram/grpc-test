@@ -9,7 +9,7 @@ service Processor {
   message ProcessImageRequest {
     Image image = 1;
     string scale = 2;
-    string grayscale = 3;
+    bool grayscale = 3;
   }
 
   message ProcessImageReply {

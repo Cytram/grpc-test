@@ -12,20 +12,19 @@ import (
 
 const (
 	host = "localhost:50052"
-    scale = "1024x768"
-    grayscale = "0"
 )
 
 // Server is a server implementing the proto API
-type Server struct{}
+type Server struct{
+    Grayscale bool
+    Scale string
+}
 
 // ScaleImage echoes the image provides in the request
 func (s *Server) ScaleImage(ctx context.Context, req *api.ScaleImageRequest) (
 	*api.ScaleImageReply, error) {
 	// Echo
 	fmt.Println("Recieved image...")
-    fmt.Printf("%t\n", grayscale)
-
     conn, err := grpc.Dial(host, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -41,8 +40,8 @@ func (s *Server) ScaleImage(ctx context.Context, req *api.ScaleImageRequest) (
                 HttpUri: req.Image.Source.GetHttpUri(),
             },
 		},
-        Scale: scale,
-        Grayscale: grayscale,
+        Scale: s.Scale,
+        Grayscale: s.Grayscale,
 	})
 	if err != nil {
 		log.Fatal(err)

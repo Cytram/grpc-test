@@ -5,7 +5,6 @@ import (
 	"net"
 	"net/http"
     "flag"
-    "fmt"
 
     "github.com/Cytram/grpc-test/pkg/api"
 	pb "github.com/Cytram/grpc-test/proto/api"
@@ -13,12 +12,14 @@ import (
 	"google.golang.org/grpc"
 )
 
-const (
-	port = ":50051"
+var (
+    processingService string
 )
 
-var grayscale = false
-//  scale bool
+const (
+	port = ":50051"
+    host = "localhost:50052"
+)
 
 // starts the Prometheus stats endpoint server
 func startPromHTTPServer(port string) {
@@ -35,13 +36,19 @@ func main() {
 	}
 
 	go startPromHTTPServer("5001")
+    conn, err := grpc.Dial(host, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
 
-    grayscale := flag.Bool("grayscale", false, "Whether or not to grayscale image")
+    Grayscale := flag.Bool("grayscale", false, "Whether or not to grayscale image")
+    Scale := flag.String("scale", "", "Whether or not to scale image and what size")
+
     flag.Parse()
-    fmt.Printf("%t\n", *grayscale)
 
 	s := grpc.NewServer()
-	pb.RegisterImageScalerServer(s, &api.Server{})
+    pb.RegisterImageScalerServer(s, &api.Server{Grayscale: *Grayscale, Scale: *Scale})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
