@@ -1,0 +1,22 @@
+FROM golang:1.13 AS builder
+# RUN apk add --no-cache --virtual .cgo-deps git zeromq-dev git gcc musl-dev openssl pkgconf
+WORKDIR /app
+COPY ["go.mod", "/app/"]
+RUN go mod download
+
+COPY pkg /app/pkg/
+COPY cmd /app/cmd/
+COPY proto /app/proto/
+RUN go build -o server cmd/service/service.go
+
+RUN wget -O grpc-health-probe -q https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.3.1/grpc_health_probe-linux-amd64 \
+    && chmod +x grpc-health-probe
+
+FROM debian:stretch-slim AS runner
+
+WORKDIR /app
+
+COPY --from=builder ["/app/server", "/app/"]
+
+EXPOSE 5001 50051
+ENTRYPOINT ["/app/server"]
